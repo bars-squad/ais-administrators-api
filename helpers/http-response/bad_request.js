@@ -1,4 +1,4 @@
-import Response from "./response.mjs";
+import Response from "./response";
 
 class BadRequest extends Response {
     constructor(status = "BAD_REQUEST") {

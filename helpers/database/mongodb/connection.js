@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import logger from "../../utils/logger.mjs";
-import config from "../../../config/global_config.mjs";
+import logger from "../../utils/logger";
+import config from "../../../config/global_config";
 
 const init = () => {
     const ctx = 'mongooseConnections';

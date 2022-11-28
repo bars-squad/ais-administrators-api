@@ -4,7 +4,11 @@ import confidence from "confidence";
 dotenv.config();
 
 const config = {
+    publicKey: process.env.PUBLIC_KEY_PATH,
+    privateKey: process.env.PRIVATE_KEY_PATH,
     port: process.env.PORT,
+    basicAuthUsernamePersisten: process.env.BASIC_AUTH_USERNAME_PERSISTENCE,
+    basicAuthPasswordPersisten: process.env.BASIC_AUTH_PASSWORD_PERSISTENCE,
     basicAuthApi: [
         {
             username: process.env.BASIC_AUTH_USERNAME,

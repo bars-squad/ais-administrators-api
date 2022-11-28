@@ -1,4 +1,4 @@
-import Response from "./response.mjs";
+import Response from "./response";
 
 class Created extends Response {
     constructor(status = "CREATED") {

@@ -1,4 +1,4 @@
-import { OK, Created, BadRequest, Unauthorized, Forbidden, NotFound, InternalServerError } from "../http-response/index.mjs";
+import { OK, Created, BadRequest, Unauthorized, Forbidden, NotFound, InternalServerError } from "../http-response";
 
 function _checkCategoriesHttpResponseCode(httpResponse) {
     const { code } = httpResponse;
@@ -33,20 +33,27 @@ function _checkHttpResponseCode(httpResponse) {
             return Forbidden;
         case 404:
             return NotFound;
+        case 409:
+            return NotFound;
         default:
             return InternalServerError;
     };
 };
 
-const result = (data = null, message = "", httpResponse, code, status) => {
+const result = (data = null, message = "", httpResponse) => {
     const httpResponseStatus = _checkCategoriesHttpResponseCode(httpResponse);
     return { error: httpResponseStatus.error, data, code: httpResponse.code, message: message, status: httpResponse.status };
 }
 
 const response = (res, result) => {
+    delete result.error;
+    return res.status(result.code).json(result);
+};
+
+/* const response = (res, result) => {
     const HttpResponse = _checkHttpResponseCode(result);
     const httpResponse = new HttpResponse(result.status).response(result.data, result.message);
     return res.status(result.code).json(httpResponse);
-};
+}; */
 
 export default { response, result };

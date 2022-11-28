@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
-import logger from "../../utils/logger.mjs";
-import config from "../../../config/global_config.mjs";
+import logger from "../../utils/logger";
+import config from "../../../config/global_config";
 const options = config.get("/mysql");
 
 const sequelize = new Sequelize(options.database, options.username, options.password, {

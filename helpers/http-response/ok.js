@@ -1,4 +1,4 @@
-import Response from "./response.mjs";
+import Response from "./response";
 
 class OK extends Response {
     constructor(status = "OK") {

@@ -1,6 +1,6 @@
 import validate from "validate.js";
-import wrapper from "./wrapper.mjs";
-import { OK, BadRequest } from "../http-response/index.mjs";
+import wrapper from "./wrapper";
+import { OK, BadRequest } from "../http-response";
 
 const isValid = (payload, constraint) => {
     const { value, error } = constraint.validate(payload);

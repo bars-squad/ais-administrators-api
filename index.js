@@ -1,6 +1,6 @@
-import logger from "./helpers/utils/logger.mjs";
+import logger from "./helpers/utils/logger";
 import server from "./server";
-import config from "./config/global_config.mjs";
+import config from "./config/global_config";
 const PORT = config.get('/port');
 
 server.listen(PORT, () => {

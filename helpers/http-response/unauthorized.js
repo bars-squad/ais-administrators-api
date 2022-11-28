@@ -1,4 +1,4 @@
-import Response from "./response.mjs";
+import Response from "./response";
 
 class Unauthorized extends Response {
     constructor(status = "UNAUTHORIZED") {
