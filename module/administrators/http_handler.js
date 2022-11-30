@@ -21,16 +21,16 @@ const login = async (req, res) => {
 
 const registration = async (req, res) => {
     const payload = req.body;
+    const requester = req.user;
 
     const validatePayload = validator.isValid(payload, payloadSchema.registration);
-    validatePayload.data.createdBy = req.user;
 
     const postData = async (result) => {
         if (result.error) {
             return result;
         };
         const admin = new AdminService();
-        return admin.registration(result.data);
+        return admin.registration(result.data, requester);
     };
 
     const sendResponse = async (result) => wrapper.response(res, result);

@@ -1,13 +1,19 @@
 import { response } from "express";
-import { ERROR } from "../../../../EazyApiRefactor/eazyapi-service/bin/helpers/http-status/status_code";
-import { OK, Created, InternalServerError } from "../../helpers/http-response";
+import { OK, Created, InternalServerError, Forbidden } from "../../helpers/http-response";
 import logger from "../../helpers/utils/logger";
 import httpRequest from "./http_request";
 import jwt from "../../middlewares/jwt_auth_helper";
+import Command from "./command";
+
+
+const notEligibleToProcessMessage = "Unknown user",
+    createAccountSuccessMessage = "Succesfully created an account";
+
 
 class AdminService {
     constructor() {
         this.ctx = this.constructor.name;
+        this.command = new Command();
     }
 
     async login(payload) {
@@ -31,15 +37,27 @@ class AdminService {
         return ok.response(admin, responses.message);
     }
 
-    async registration(payload) {
+    async registration(payload, perpetrator) {
         const ctx = `${this.ctx}.registration`;
+        const createdBy = await this.command.getUserFromSession(`user.profile.${perpetrator.id}`);
+        if (createdBy.error) {
+            logger.log(ctx, createdBy.message, `this.command.getUserFromSession`);
+            return new Forbidden("NOT_ELIGIBLE").response(null, notEligibleToProcessMessage);
+        };
+
+        payload.createdBy = {
+            id: createdBy.data.id,
+            name: createdBy.data.name,
+            email: createdBy.data.email
+        };
+
         const responses = await httpRequest.registration(payload);
         if (responses.code != 201) {
-            logger.log(`${ctx}.httpRequest.registration`, responses.message, response.code);
+            logger.log(ctx, responses.message, "httpRequest.registration");
             return responses;
         };
 
-        return new Created().response(responses.data, "Succesfully created an account");
+        return new Created().response(responses.data, createAccountSuccessMessage);
     }
 }
 
