@@ -23,6 +23,11 @@ const config = {
     },
     mongoDbUrl: process.env.MONGO_DATABASE_URL,
     jwtKey: process.env.JWT_KEY,
+    redisConfig: {
+        host: process.env.REDIS_HOST,
+        port: process.env.REDIS_PORT,
+        password: process.env.REDIS_PASSWORD
+    },
 };
 
 const store = new confidence.Store(config);
