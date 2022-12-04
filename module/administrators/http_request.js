@@ -17,7 +17,7 @@ const login = async (payload) => {
     const response = await fetch(options);
     return response;
   } catch (error) {
-    return error.response.data;
+    return error;
   };
 };
 
@@ -36,7 +36,7 @@ const registration = async (payload) => {
     const response = await fetch(options);
     return response;
   } catch (error) {
-    return error.response.data;
+    return error;
   };
 };
 

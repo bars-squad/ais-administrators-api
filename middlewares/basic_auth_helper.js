@@ -6,7 +6,7 @@ import User from "./auth_repository"
 passport.use(new BasicStrategy((username, password, cb) => {
   const user = new User();
   const error = new Unauthorized();
-  error.message = "Invalid credential"
+  error.message = "Authentication failed"
 
   return user.findByUsername(username, (user) => {
     if (!user) {
