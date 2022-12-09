@@ -5,7 +5,8 @@ import BadRequest from "./bad_request";
 import Forbidden from "./forbidden";
 import NotFound from "./not_found";
 import Unauthorized from "./unauthorized";
+import UnprocessableEntity from "./unprocessable_entity"
 
 import InternalServerError from "./internal_server_error";
 
-export { OK, Created, BadRequest, Forbidden, NotFound, Unauthorized, InternalServerError };
+export { OK, Created, BadRequest, Forbidden, NotFound, Unauthorized, InternalServerError, UnprocessableEntity };

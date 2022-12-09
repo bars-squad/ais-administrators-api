@@ -1,6 +1,6 @@
 import wrapper from "../helpers/utils/wrapper";
 import { OK } from "../helpers/http-response";
-import { NotFound } from "../helpers/http-response";
+import { NotFound, UnprocessableEntity } from "../helpers/http-response";
 import administrators from "./administrators";
 import basicAuth from "../middlewares/basic_auth_helper";
 
@@ -14,13 +14,15 @@ const init = server => {
     });
 
     server.use((req, res, next) => {
-        const error = new NotFound("PAGE_NOT_FOUND");
-        error.message = "You're lost, double check your endpoint";
+        const error = new NotFound("PAGE_NOT_FOUND").response(null, "You're lost, double check your endpoint");
         next(error);
     });
 
     server.use((error, req, res, next) => {
-        return wrapper.response(res, error.response(null, error.message));
+        if (error.type === "entity.parse.failed") {
+            return wrapper.response(res, new UnprocessableEntity().response(null, error.message));
+        };
+        return wrapper.response(res, error);
     });
 };
 
